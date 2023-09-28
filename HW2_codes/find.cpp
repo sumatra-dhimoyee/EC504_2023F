@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
   for( k = 0; k < NoOfKeys; k++)
     {
       find_index_dictionary = -1;
-      find_index_dictionary = -1;
+      find_index_bisection = -1;
       
   /* Find Key by Bisection  Search  */
 
@@ -125,9 +125,22 @@ Provide funtions below
 int findBisection(int key, int *a, int N)
 {
   int index = -1;
-  // while(??) {
-  OpCountBisection++;  // counts the number of call to routine
-   //}
+  int min=0;
+  int max=N-1;
+  while(min<=max) {
+    int mid = min+(0.5*(max-min));
+    if(key==a[mid]){
+      index=mid;
+      return index;
+    }
+    else if(key>a[mid]){
+      min=mid+1;
+    }
+    else{
+      max=mid-1;
+    }
+    OpCountBisection++;  // counts the number of call to routine
+  }
   
   return index;
 }
@@ -135,9 +148,23 @@ int findBisection(int key, int *a, int N)
 int findDictionary(int key, int *a, int N)
 {
   int index = -1;
-  // while(??) {
+  int min=0;
+  int max=N-1;
+  while(min<=max) {
+      double x = (key-a[min])/(a[max]-a[min]);
+      int mid = min + x*(max-min);
+      if(key==a[mid]){
+        index=mid;
+        return index;
+      }
+      else if(key>a[mid]){
+        min=mid+1;
+      }
+      else{
+        max=mid-1;
+      }
       OpCountDictionary++;  // counts the number of call to routine
-      //}
+  }
   return index;
 }
 
